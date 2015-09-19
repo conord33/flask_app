@@ -10,6 +10,7 @@ listening on `localhost:8080`.
 ### Running the tests
 
 The tests can be run by taking the following steps.
+
 1. ssh into the vagrant box   `vagrant ssh`
 2. go into the app directory  `cd /srv/webapps/flask_api/src`
 3. configure venv             `ssource ../venv/bin/activat`

@@ -1,0 +1,22 @@
+---
+# Supervisor tasks
+
+- name: create supervisord config folder
+  action: file dest=/etc/supervisor state=directory owner=root
+
+- name: create supervisord config
+  action: template src=supervisor/templates/supervisord.conf dest=/etc/supervisord.conf
+
+- name: create supervisord init script
+  action: template src=supervisor/templates/supervisord.sh dest=/etc/init.d/supervisord mode=0755
+
+- name: start supervisord service and have it run during system startup
+  action: service name=supervisord state=started enabled=yes
+
+- name: create supervisor program config
+  action: template src=supervisor/templates/supervisor.ini dest=/etc/supervisor/{{app_name}}.ini
+  notify:
+    - restart app
+
+- name: start app
+  action: supervisorctl name={{app_name}} state=started

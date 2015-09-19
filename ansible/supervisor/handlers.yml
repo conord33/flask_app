@@ -1,0 +1,5 @@
+---
+# Supervisor handlers
+
+- name: restart app
+  action: supervisorctl name={{app_name}} state=restarted

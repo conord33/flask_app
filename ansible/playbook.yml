@@ -1,0 +1,33 @@
+---
+- hosts: all
+  sudo: true
+
+  vars:
+    app_name: flask_api
+    webapps_dir: /srv/webapps
+    wsgi_file: wsgi.py
+    wsgi_callable: app
+
+  tasks:
+
+    - include: python/tasks.yml
+
+    - include: nginx/tasks.yml
+
+    - include: supervisor/tasks.yml
+
+    - include: mongo/tasks.yml
+
+  handlers:
+
+    - include: nginx/handlers.yml
+
+    - include: supervisor/handlers.yml
+
+
+
+
+
+
+
+

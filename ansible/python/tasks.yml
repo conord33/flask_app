@@ -1,0 +1,29 @@
+---
+# Python tasks
+
+- name: install common packages needed for python application development
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - libpq-dev
+    - python-dev
+    - python-setuptools
+    - git-core
+
+- name: install pip
+  action: easy_install name=pip
+
+- name: install various libraries with pip
+  action: pip name={{item}} state=present
+  with_items:
+    - virtualenv
+    - supervisor
+    - uwsgi
+
+- name: create webapps directory
+  action: file dest={{webapps_dir}} state=directory
+
+- name: ensure log directory
+  action: file dest={{webapps_dir}}/{{app_name}}/log state=directory
+
+- name: install dependencies into virtualenv
+  action: pip requirements={{webapps_dir}}/{{app_name}}/src/requirements.txt virtualenv={{webapps_dir}}/{{app_name}}/venv state=present
